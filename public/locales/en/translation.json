@@ -86,7 +86,8 @@
 			"depot": "Depot",
 			"transactionsHistory": "Transactions",
 			"escrow": "Escrow",
-			"lpRewards": "LP rewards"
+			"lpRewards": "LP rewards",
+			"staking": "Staking"
 		}
 	},
 
@@ -394,6 +395,21 @@
 			},
 			"info": {
 				"weeklyRewards": "Weekly rewards"
+			}
+		}
+	},
+	"staking": {
+		"intro": {
+			"title": "Choose your role"
+		},
+		"actions": {
+			"roleStaker": {
+				"title": "Staker",
+				"placeholder": "Bugs bunny goes here"
+			},
+			"roleManager": {
+				"title": "Pool Manager",
+				"placeholder": "Bugs bunny goes here"
 			}
 		}
 	},
