@@ -14,7 +14,7 @@ const buyWithETHBTC = () => {
 	GAevent('User', 'Buy OKS with ETH/BTC', 'BuyOKSwETHBTC');
 };
 
-const GetOKS = ({ test }) => {
+const GetOKS = ({}) => {
 	useEffect(() => {
 		initGA();
 	}, []);
