@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import UniPoolsTRX from '../UniPoolsTRX';
-import UnipoolsETH from '../UniPoolsETH';
+import Manager from '../Manager';
 
 import { H1, PageTitle } from '../../../components/Typography';
 import PageContainer from '../../../components/PageContainer';
@@ -27,7 +27,7 @@ const Staking = () => {
 			case 'staker':
 				return <UniPoolsTRX goBack={goBack} />;
 			case 'manager':
-				return <UnipoolsETH goBack={goBack} />;
+				return <Manager goBack={goBack} />;
 		}
 	};
 

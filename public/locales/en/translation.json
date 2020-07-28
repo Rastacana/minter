@@ -411,6 +411,21 @@
 				"title": "Pool Manager",
 				"placeholder": "Bugs bunny goes here"
 			}
+		},
+		"staker": {
+		},
+		"manager": {
+			"intro": {
+				"title": "Manage Pool"
+			},
+			"actions": {
+				"mint": "Mint/Burn with staked OKS",
+				"depot": "Deposit to depot",
+				"withdraw": "Withdraw OKS",
+				"swap": "Deposit to swap sETH pool",
+				"trade": "Trade on Oikos Exchange",
+				"manage": "Manage stake on edit feeds"
+			}
 		}
 	},
 	"unipoolSETH": {
