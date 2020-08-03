@@ -413,6 +413,36 @@
 			}
 		},
 		"staker": {
+			"choosePool": {
+				"intro": {
+					"title": "Choose Pool",
+					"disclaimer": "Choose your pool based on your own criteria. Past performances are not a guarantee for the future in financial markets, like Forex, Stock and Crypto. This is not a financial advice. Read more."
+				},
+				"actions": {
+					"hoo": {
+						"title": "Hoo",
+						"code": "APP"
+					},
+					"biki": {
+						"title": "Biki",
+						"code": "APR"
+					},
+					"mxc": {
+						"title": "Mxc",
+						"code": "APR"
+					}
+				}
+			},
+			"manageStake": {
+				"intro": {
+					"title": "Manage your stake"
+				},
+				"actions": {
+					"deposit": "Deposit OKS",
+					"withdraw": "Withdraw OKS",
+					"exit": "Exit (Withdraw your staking rewards and unstake)"
+				}
+			}
 		},
 		"manager": {
 			"intro": {

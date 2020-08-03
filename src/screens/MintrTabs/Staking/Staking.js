@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import UniPoolsTRX from '../UniPoolsTRX';
+import Staker from '../Staker';
 import Manager from '../Manager';
 
 import { H1, PageTitle } from '../../../components/Typography';
@@ -25,7 +25,7 @@ const Staking = () => {
 	const getPoolComponent = roleName => {
 		switch (roleName) {
 			case 'staker':
-				return <UniPoolsTRX goBack={goBack} />;
+				return <Staker goBack={goBack} />;
 			case 'manager':
 				return <Manager goBack={goBack} />;
 		}
