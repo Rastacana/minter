@@ -3,7 +3,7 @@ import { getTronNetwork } from './networkHelper';
 import contracts from './contracts';
 
 console.log({ contracts });
-const { uniswapSTRX, uniswapSETH, unipoolstrx, unipoolseth } = contracts;
+const {uniswapTRXUSDT,  unipoolUSDT} = contracts;
 
 let snxJSConnector = {
 	initialized: false,
@@ -19,12 +19,12 @@ let snxJSConnector = {
 		this.provider = this.signer.provider;
 		this.utils = this.snxJS.utils;
 		this.ethersUtils = this.snxJS.ethers.utils;
-		this.uniswapstrxContract = contractSettings._contracts[0];
-		this.unipoolstrxContract = contractSettings._contracts[1];
-		this.oldUnipoolstrxContract = contractSettings._contracts[2];
+		this.uniswaptrxusdtContract = contractSettings._contracts[0];
+		this.unipooltrxusdtContract = contractSettings._contracts[1];
+		/*this.oldUnipoolstrxContract = contractSettings._contracts[2];
 		this.uniswapsethContract = contractSettings._contracts[3];
 		this.unipoolsethContract = contractSettings._contracts[4];
-		this.oldUnipoolsethContract = contractSettings._contracts[5];
+		this.oldUnipoolsethContract = contractSettings._contracts[5];*/
 	},
 };
 
@@ -176,21 +176,20 @@ export const connectToWallet = async ({ wallet, derivationPath }) => {
 	}
 
 	let _contracts = [];  
-	let uniswapstrxContract = tronWeb.contract(contracts.uniswapSTRX.abi, contracts.uniswapSTRX.address);
-	let unipoolstrxContract = await tronWeb.contract().at(contracts.unipoolstrx.address);
+	let uniswaptrxusdtContract = tronWeb.contract(contracts.uniswapTRXUSDT.abi, contracts.uniswapTRXUSDT.address);
+	let unipooltrxusdtContract = await tronWeb.contract().at(contracts.unipoolUSDT.address);
 
-	let oldUnipoolstrxContract = await tronWeb.contract().at(unipoolstrx.oldAddress);
+	//let oldUnipoolstrxContract = await tronWeb.contract().at(unipoolstrx.oldAddress);
+	//let uniswapsethContract = await tronWeb.contract().at(contracts.uniswapSETH.address);
+	//let unipoolsethContract = await tronWeb.contract().at(unipoolseth.address);
+	//let oldUnipoolsethContract = await tronWeb.contract().at(unipoolseth.oldAddress);
 
-	let uniswapsethContract = await tronWeb.contract().at(contracts.uniswapSETH.address);
-	let unipoolsethContract = await tronWeb.contract().at(unipoolseth.address);
-	let oldUnipoolsethContract = await tronWeb.contract().at(unipoolseth.oldAddress);
-
-	_contracts.push(uniswapstrxContract);
-	_contracts.push(unipoolstrxContract);
-	_contracts.push(oldUnipoolstrxContract);
-	_contracts.push(uniswapsethContract);
-	_contracts.push(unipoolsethContract);
-	_contracts.push(oldUnipoolsethContract);
+	_contracts.push(uniswaptrxusdtContract);
+	_contracts.push(unipooltrxusdtContract);
+	//_contracts.push(oldUnipoolstrxContract);
+	//_contracts.push(uniswapsethContract);
+	//_contracts.push(unipoolsethContract);
+	//_contracts.push(oldUnipoolsethContract);
 
 	setSigner({ type: wallet, networkId, derivationPath, _contracts });
 

@@ -322,11 +322,11 @@
 	"unipool": {
 		"locked": {
 			"title": "Oikos Swap Liquidity Pool",
-			"subtitle": "If you're contributing liquidity to the sTRX liquidity pool on Oikos Swap, you can now earn OKS rewards by staking your Oikos Swap LP token here."
+			"subtitle": "If you're contributing liquidity to the Swap V2 liquidity pool on Oikos Swap, you can now earn OKS rewards by staking your Oikos Swap LP token here."
 		},
 		"unlocked": {
-			"title": "Stake & manage your Swap LP Tokens",
-			"subtitle": "Here you can stake/unstake your sTRX Swap liquidty pool tokens, claim rewards, or exit completely if you're already staking (includes claiming).",
+			"title": "Stake & manage your Swap V2 LP Tokens", 
+			"subtitle": "Here you can stake/unstake your Swap V2 liquidty pool tokens, claim rewards, or exit completely if you're already staking (includes claiming).",
 			"buttonText": "Go to swap ↗",
 			"data": {
 				"balance": "Your balance",
@@ -358,11 +358,11 @@
 			"completed": "Completed"
 		},
 		"actions": {
-			"unipoolSETH": {
-				"title": "Swap Pool sETH"
-			},
 			"unipoolSTRX": {
 				"title": "Swap Pool sTRX"
+			},
+			"unipoolUSDT": {
+				"title": "Swap Pool TRX/USDT"
 			}
 		},
 		"shared": {
@@ -401,7 +401,7 @@
 		"title": "Uniswap sETH LP Token Rewards",
 		"locked": {
 			"subtitle": "If you're contributing liquidity to the sETH liquidity pool on Oikos Swap, you can now earn OKS rewards by staking your Oikos Swap LP token here.",
-			"transaction": "Setting SWAP-V1 LP token allowance"
+			"transaction": "Setting SWAP-V2 LP token allowance"
 		},
 		"unlocked": {
 			"subtitle": "Here you can stake/unstake your sETH Swap liquidty pool tokens, claim rewards, or exit completely if you're already staking (includes claiming)."

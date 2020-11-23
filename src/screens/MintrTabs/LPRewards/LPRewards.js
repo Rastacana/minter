@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import UniPoolsTRX from '../UniPoolsTRX';
-import UnipoolsETH from '../UniPoolsETH';
+//import UniPoolsTRX from '../UniPoolsTRX';
+//import UnipoolsETH from '../UniPoolsETH';
+import UniPoolUSDT from '../UniPoolUSDT';
 
 import { H1, PageTitle } from '../../../components/Typography';
 import PageContainer from '../../../components/PageContainer';
 
 const POOLS = [
-	{
+	/*{
 		title: 'lpRewards.actions.unipoolSETH.title',
-		name: 'swapsTRX',
-	},
-	{
-		title: 'lpRewards.actions.unipoolSTRX.title',
 		name: 'swapSETH',
+	},*/
+	{
+		title: 'lpRewards.actions.unipoolUSDT.title',
+		name: 'swapUSDT',
 	},
 ];
 
@@ -26,10 +27,10 @@ const LPRewards = () => {
 
 	const getPoolComponent = poolName => {
 		switch (poolName) {
-			case 'swapsTRX':
-				return <UniPoolsTRX goBack={goBack} />;
-			case 'swapSETH':
-				return <UnipoolsETH goBack={goBack} />;
+			case 'swapUSDT':
+				return <UniPoolUSDT goBack={goBack} />;
+			//case 'swapSETH':
+			//	return <UnipoolsETH goBack={goBack} />;
 		}
 	};
 
@@ -43,17 +44,18 @@ const LPRewards = () => {
 					<ButtonRow>
 						{POOLS.map(({ title, name }) => {
 							let _name, _icon;
-							if (name === 'swapsTRX') {
-								_name = 'unipoolSTRX';
+							if (name === 'swapUSDT') {
+								_name = 'unipoolUSDT';
 								_icon = 'sTRX';
-							} else if (name === 'swapSETH') {
+							} /*else if (name === 'swapSETH') {
 								_name = 'unipoolSETH';
 								_icon = 'sETH';
-							}
+							}*/
+							// <ActionImage src={`/images/${_icon}-icon.svg`} big />
 							return (
 								<Button onClick={() => setCurrentPool(name)} key={Math.random()}>
 									<ButtonContainer>
-										<ActionImage src={`/images/${_icon}-icon.svg`} big />
+									<ActionImage src={`/images/oi-SWAP.svg`} big />
 										<H1>{t(`lpRewards.actions.${_name}.title`)}</H1>
 									</ButtonContainer>
 								</Button>
