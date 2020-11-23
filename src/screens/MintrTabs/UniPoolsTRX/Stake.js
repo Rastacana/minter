@@ -54,8 +54,10 @@ const Stake = ({ t, goBack }) => {
 	} = useContext(Store);
 
 	const fetchData = useCallback(async () => {
+
 		if (!snxJSConnector.initialized) return;
 		try {
+			//ABI-less contract error triggers here
 			const { uniswapstrxContract, unipoolstrxContract } = snxJSConnector;
 			const [univ1Held, univ1Staked, rewards] = await Promise.all([
 				uniswapstrxContract.balanceOf(currentWallet).call(),
