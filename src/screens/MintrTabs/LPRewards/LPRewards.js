@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import UniPoolsTRX from '../UniPoolsTRX';
-import UnipoolsETH from '../UniPoolsETH';
+import UniPoolsETH from '../UniPoolsETH';
+import UniPoolTRXUSDT from '../UniPoolUSDT';
 
 import { H1, PageTitle } from '../../../components/Typography';
 import PageContainer from '../../../components/PageContainer';
 
-const POOLS = [
+const OLD_POOLS = [
 	{
 		title: 'lpRewards.actions.unipoolSETH.title',
 		name: 'swapsTRX',
@@ -18,7 +19,12 @@ const POOLS = [
 		name: 'swapSETH',
 	},
 ];
-
+const NEW_POOLS = [
+	{
+		title: 'lpRewards.actions.unipoolSTRX.title',
+		name: 'swapTRXUSDT',
+	},
+];
 const LPRewards = () => {
 	const { t } = useTranslation();
 	const [currentPool, setCurrentPool] = useState(null);
@@ -29,7 +35,10 @@ const LPRewards = () => {
 			case 'swapsTRX':
 				return <UniPoolsTRX goBack={goBack} />;
 			case 'swapSETH':
-				return <UnipoolsETH goBack={goBack} />;
+				return <UniPoolsETH goBack={goBack} />;
+			case 'swapTRXUSDT':
+				return <UniPoolTRXUSDT goBack={goBack} />;
+
 		}
 	};
 
@@ -41,7 +50,7 @@ const LPRewards = () => {
 				<>
 					<PageTitle>{t('lpRewards.intro.title')}</PageTitle>
 					<ButtonRow>
-						{POOLS.map(({ title, name }) => {
+						{OLD_POOLS.map(({ title, name }) => {
 							let _name, _icon;
 							if (name === 'swapsTRX') {
 								_name = 'unipoolSTRX';
@@ -60,6 +69,23 @@ const LPRewards = () => {
 							);
 						})}
 					</ButtonRow>
+					<br />
+					<ButtonRow>
+						{NEW_POOLS.map(({ title, name }) => {
+							let _name, _icon;
+							if (name === 'swapTRXUSDT') {
+								_name = 'unipoolUSDTRX';;
+							}  
+							return (
+								<Button onClick={() => setCurrentPool(name)} key={Math.random()}>
+									<ButtonContainer>
+										<ActionImage src={`/images/oi-SWAP.svg`} big />
+										<H1>{t(`lpRewards.actions.${_name}.title`)}</H1>
+									</ButtonContainer>
+								</Button>
+							);
+						})}
+					</ButtonRow>					
 				</>
 			)}
 		</PageContainer>
