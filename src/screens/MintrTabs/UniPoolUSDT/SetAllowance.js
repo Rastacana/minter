@@ -25,7 +25,7 @@ const SetAllowance = ({ t }) => {
 
 	const onUnlock = async () => {
 		const { parseEther } = snxJSConnector.utils;
-		const { uniswapstrxContract, unipoolstrxContract } = snxJSConnector;
+		const { uniswaptrxusdtContract, unipooltrxusdtContract } = snxJSConnector;
 		try {
 			setError(null);
 
@@ -33,15 +33,15 @@ const SetAllowance = ({ t }) => {
 				unipoolContract.address,
 				parseEther(ALLOWANCE_LIMIT.toString())
 			);*/
-			const transactionHash = await uniswapstrxContract
-				.approve(unipoolstrxContract.address, parseEther(ALLOWANCE_LIMIT.toString()))
+			const transactionHash = await uniswaptrxusdtContract
+				.approve(unipooltrxusdtContract.address, parseEther(ALLOWANCE_LIMIT.toString()))
 				.send();
 			if (transactionHash) {
 				createTransaction(
 					{
 						hash: transactionHash,
 						status: 'pending',
-						info: `Setting Uni-V1 LP token allowance`,
+						info: `Setting Uni-V2 LP token allowance`,
 						hasNotification: true,
 					},
 					dispatch
@@ -55,11 +55,11 @@ const SetAllowance = ({ t }) => {
 	return (
 		<>
 			<TitleContainer>
-				<PageTitle>{t('unipoolSTRX.locked.title')}</PageTitle>
+				<PageTitle>{t('unipool.locked.title')}</PageTitle>
 			</TitleContainer>
-			<PLarge>{t('unipoolSTRX.locked.subtitle')}</PLarge>
+			<PLarge>{t('unipool.locked.subtitle')}</PLarge>
 			<ButtonRow>
-				<ButtonPrimary onClick={onUnlock}>{t('unipoolSTRX.buttons.unlock')}</ButtonPrimary>
+				<ButtonPrimary onClick={onUnlock}>{t('unipool.buttons.unlock')}</ButtonPrimary>
 			</ButtonRow>
 			{error ? <Error>{`Error: ${error}`}</Error> : null}
 		</>

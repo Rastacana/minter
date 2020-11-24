@@ -14,7 +14,7 @@ import { PageTitle, PLarge } from '../../../components/Typography';
 import DataBox from '../../../components/DataBox';
 import { ButtonTertiary, ButtonPrimary } from '../../../components/Button';
 
-import UnipoolActions from '../../UnipoolActionsTRX';
+import UnipoolActions from '../../UnipoolActionsUSDT';
 
 const TRANSACTION_DETAILS = {
 	stake: {
@@ -40,7 +40,7 @@ const TRANSACTION_DETAILS = {
 };
 
 const Stake = ({ t, goBack }) => {
-	const { unipoolstrxContract, oldunipoolstrxContract } = snxJSConnector;
+	const { unipooltrxusdtContract } = snxJSConnector;
 	const [balances, setBalances] = useState(null);
 	const [currentScenario, setCurrentScenario] = useState({});
 	const [withdrawAmount, setWithdrawAmount] = useState('');
@@ -54,14 +54,18 @@ const Stake = ({ t, goBack }) => {
 	} = useContext(Store);
 
 	const fetchData = useCallback(async () => {
+
 		if (!snxJSConnector.initialized) return;
 		try {
-			const { uniswapstrxContract, unipoolstrxContract } = snxJSConnector;
+
+			const { uniswaptrxusdtContract, unipooltrxusdtContract } = snxJSConnector;
+			 
 			const [univ1Held, univ1Staked, rewards] = await Promise.all([
-				uniswapstrxContract.balanceOf(currentWallet).call(),
-				unipoolstrxContract.balanceOf(currentWallet).call(),
-				unipoolstrxContract.earned(currentWallet).call(),
+				uniswaptrxusdtContract.balanceOf(currentWallet).call({ _isConstant: true }),
+				unipooltrxusdtContract.balanceOf(currentWallet).call(),
+				unipooltrxusdtContract.earned(currentWallet).call(),
 			]);
+
 			setBalances({
 				univ1Held: formatUniv1(univ1Held),
 				univ1HeldBN: univ1Held,
@@ -84,7 +88,7 @@ const Stake = ({ t, goBack }) => {
 
 	useEffect(() => {
 		if (!currentWallet) return;
-		const { uniswapstrxContract, unipoolstrxContract } = snxJSConnector;
+		const { uniswaptrxusdtContract, unipooltrxusdtContract } = snxJSConnector;
 		(async () => {
 			/*const res = await oldunipoolstrxContract.balanceOf(currentWallet).call();
 			if (res) {
@@ -105,24 +109,24 @@ const Stake = ({ t, goBack }) => {
 				<ButtonTertiary
 					as="a"
 					target="_blank"
-					href="https://swap.oikos.cash/#/pools"
+					href="https://swap.oikos.cash/#/pool"
 				>
-					{t('unipoolSTRX.unlocked.buttonText')}
+					{t('unipool.unlocked.buttonText')}
 				</ButtonTertiary>
 			</Navigation>
-			<PageTitle>{t('unipoolSTRX.unlocked.title')}</PageTitle>
-			<PLarge>{t('unipoolSTRX.unlocked.subtitle')}</PLarge>
+			<PageTitle>{t('unipool.unlocked.title')}</PageTitle>
+			<PLarge>{t('unipool.unlocked.subtitle')}</PLarge>
 			<BoxRow>
 				<DataBox
-					heading={t('unipoolSTRX.unlocked.data.balance')}
+					heading={t('unipool.unlocked.data.balance')}
 					body={`${balances ? formatCurrency(balances.univ1Held) : 0} SWAP`}
 				/>
 				<DataBox
-					heading={t('unipoolSTRX.unlocked.data.staked')}
+					heading={t('unipool.unlocked.data.staked')}
 					body={`${balances ? formatCurrency(balances.univ1Staked) : 0} SWAP`}
 				/>
 				<DataBox
-					heading={t('unipoolSTRX.unlocked.data.rewardsAvailable')}
+					heading={t('unipool.unlocked.data.rewardsAvailable')}
 					body={`${balances ? formatCurrency(balances.rewards) : 0} OKS`}
 				/>
 			</BoxRow>
@@ -133,27 +137,27 @@ const Stake = ({ t, goBack }) => {
 						onClick={() =>
 							setCurrentScenario({
 								action: 'stake',
-								label: t('unipoolSTRX.unlocked.actions.staking'),
+								label: t('unipool.unlocked.actions.staking'),
 								amount: `${balances && formatCurrency(balances.univ1Held)} SWAP`,
 								param: balances && balances.univ1HeldBN,
 								...TRANSACTION_DETAILS['stake'],
 							})
 						}
 					>
-						{t('unipoolSTRX.buttons.stake')}
+						{t('unipool.buttons.stake')}
 					</ButtonAction>
 					<ButtonAction
 						disabled={!balances || !balances.rewards}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'claim',
-								label: t('unipoolSTRX.unlocked.actions.claiming'),
+								label: t('unipool.unlocked.actions.claiming'),
 								amount: `${balances && formatCurrency(balances.rewards)} OKS`,
 								...TRANSACTION_DETAILS['claim'],
 							})
 						}
 					>
-						{t('unipoolSTRX.buttons.claim')}
+						{t('unipool.buttons.claim')}
 					</ButtonAction>
 				</ButtonRow>
 				<ButtonRow>
@@ -162,28 +166,28 @@ const Stake = ({ t, goBack }) => {
 						onClick={() =>
 							setCurrentScenario({
 								action: 'unstake',
-								label: t('unipoolSTRX.unlocked.actions.unstaking'),
+								label: t('unipool.unlocked.actions.unstaking'),
 								amount: `${balances && formatCurrency(balances.univ1Staked)} SWAP`,
 								param: balances && balances.univ1StakedBN,
 								...TRANSACTION_DETAILS['unstake'],
 							})
 						}
 					>
-						{t('unipoolSTRX.buttons.unstake')}
+						{t('unipool.buttons.unstake')}
 					</ButtonAction>
 					<ButtonAction
 						disabled={!balances || (!balances.univ1Staked && !balances.rewards)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'exit',
-								label: t('unipoolSTRX.unlocked.actions.exiting'),
+								label: t('unipool.unlocked.actions.exiting'),
 								amount: `${balances && formatCurrency(balances.univ1Staked)} SWAP & ${balances &&
 									formatCurrency(balances.rewards)} OKS`,
 								...TRANSACTION_DETAILS['exit'],
 							})
 						}
 					>
-						{t('unipoolSTRX.buttons.exit')}
+						{t('unipool.buttons.exit')}
 					</ButtonAction>
 				</ButtonRow>
 			</ButtonBlock>
