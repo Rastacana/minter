@@ -34,7 +34,7 @@ const UniPool = ({ goBack }) => {
 			setIsLoading(true);
 			const allowance = await uniswapstrxContract
 				.allowance(currentWallet, unipoolstrxContract.address)
-				.call();
+				.call({ _isConstant: true });
 			setAllowance(!!bigNumberFormatter(allowance));
 			setIsLoading(false);
 		} catch (e) {

@@ -60,7 +60,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 		try {
 			const { uniswapsethContract, unipoolsethContract } = snxJSConnector;
 			const [univ1Held, univ1Staked, rewards] = await Promise.all([
-				uniswapsethContract.balanceOf(currentWallet).call(),
+				uniswapsethContract.balanceOf(currentWallet).call({ _isConstant: true }),
 				unipoolsethContract.balanceOf(currentWallet).call(),
 				unipoolsethContract.earned(currentWallet).call(),
 			]);
@@ -117,7 +117,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 			<BoxRow>
 				<DataBox
 					heading={t('unipool.unlocked.data.balance')}
-					body={`${balances ? formatCurrency(balances.univ1Held) : 0} SWAP`}
+					body={`${balances ? (balances.univ1Held) : 0} SWAP`}
 				/>
 				<DataBox
 					heading={t('unipool.unlocked.data.staked')}
@@ -136,7 +136,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 							setCurrentScenario({
 								action: 'stake',
 								label: t('unipool.unlocked.actions.staking'),
-								amount: `${balances && formatCurrency(balances.univ1Held)} SWAP`,
+								amount: `${balances && formatUniv1(balances.univ1Held)} SWAP`,
 								param: balances && balances.univ1HeldBN,
 								...TRANSACTION_DETAILS['stake'],
 							})
@@ -165,7 +165,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 							setCurrentScenario({
 								action: 'unstake',
 								label: t('unipool.unlocked.actions.unstaking'),
-								amount: `${balances && formatCurrency(balances.univ1Staked)} SWAP`,
+								amount: `${balances && formatUniv1(balances.univ1Staked)} SWAP`,
 								param: balances && balances.univ1StakedBN,
 								...TRANSACTION_DETAILS['unstake'],
 							})
@@ -179,7 +179,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 							setCurrentScenario({
 								action: 'exit',
 								label: t('unipool.unlocked.actions.exiting'),
-								amount: `${balances && formatCurrency(balances.univ1Staked)} SWAP & ${balances &&
+								amount: `${balances && formatUniv1(balances.univ1Staked)} SWAP & ${balances &&
 									formatCurrency(balances.rewards)} OKS`,
 								...TRANSACTION_DETAILS['exit'],
 							})

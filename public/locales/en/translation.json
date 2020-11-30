@@ -324,7 +324,7 @@
 		"title": "Uniswap sETH LP Token Rewards",
 		"locked": {
 			"subtitle": "If you're contributing liquidity to the sETH liquidity pool on Oikos Swap, you can now earn OKS rewards by staking your Oikos Swap LP token here.",
-			"transaction": "Setting SWAP-V1 LP token allowance"
+			"transaction": "Setting SWAP-V2 LP token allowance"
 		},
 		"unlocked": {
 			"title": "Stake & manage your Swap LP Tokens",
@@ -426,10 +426,10 @@
 		},
 		"actions": {
 			"unipoolSETH": {
-				"title": "Swap V1 sETH"
+				"title": "Swap V2 sETH"
 			},
 			"unipoolSTRX": {
-				"title": "Swap V1 sTRX"
+				"title": "Swap V2 sTRX"
 			},
 			"unipoolUSDTRX": {
 				"title": "SWAP V2 TRX/USDT"
