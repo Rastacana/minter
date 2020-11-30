@@ -58,7 +58,7 @@ const Stake = ({ t, goBack }) => {
 		try {
 			const { uniswapstrxContract, unipoolstrxContract } = snxJSConnector;
 			const [univ1Held, univ1Staked, rewards] = await Promise.all([
-				uniswapstrxContract.balanceOf(currentWallet).call(),
+				uniswapstrxContract.balanceOf(currentWallet).call({ _isConstant: true }),
 				unipoolstrxContract.balanceOf(currentWallet).call(),
 				unipoolstrxContract.earned(currentWallet).call(),
 			]);

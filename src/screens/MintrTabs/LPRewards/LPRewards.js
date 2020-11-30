@@ -9,7 +9,7 @@ import UniPoolTRXUSDT from '../UniPoolUSDT';
 import { H1, PageTitle } from '../../../components/Typography';
 import PageContainer from '../../../components/PageContainer';
 
-const OLD_POOLS = [
+const ROW_1 = [
 	{
 		title: 'lpRewards.actions.unipoolSETH.title',
 		name: 'swapsTRX',
@@ -19,7 +19,7 @@ const OLD_POOLS = [
 		name: 'swapSETH',
 	},
 ];
-const NEW_POOLS = [
+const ROW_2 = [
 	{
 		title: 'lpRewards.actions.unipoolSTRX.title',
 		name: 'swapTRXUSDT',
@@ -50,7 +50,7 @@ const LPRewards = () => {
 				<>
 					<PageTitle>{t('lpRewards.intro.title')}</PageTitle>
 					<ButtonRow>
-						{OLD_POOLS.map(({ title, name }) => {
+						{ROW_1.map(({ title, name }) => {
 							let _name, _icon;
 							if (name === 'swapsTRX') {
 								_name = 'unipoolSTRX';
@@ -71,7 +71,7 @@ const LPRewards = () => {
 					</ButtonRow>
 					<br />
 					<ButtonRow>
-						{NEW_POOLS.map(({ title, name }) => {
+						{ROW_2.map(({ title, name }) => {
 							let _name, _icon;
 							if (name === 'swapTRXUSDT') {
 								_name = 'unipoolUSDTRX';;

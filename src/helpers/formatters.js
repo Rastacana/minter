@@ -6,6 +6,11 @@ export const formatCurrency = (value, decimals = 3) => {
 	if (!Number(value)) return 0;
 	return numbro(value).format('0,0.' + '0'.repeat(decimals));
 };
+export const formatUniv1 = (value, decimals = 3) => {
+	if (!value) return 0;
+	if (!Number(value)) return 0;
+	return Number(value.toString() / 10**18).toFixed(decimals)
+};
 
 export const shortenAddress = address => {
 	if (!address) return null;
@@ -15,9 +20,5 @@ export const shortenAddress = address => {
 export const bytesFormatter = input => snxJSConnector.ethersUtils.formatBytes32String(input);
 
 export const bigNumberFormatter = value => Number(snxJSConnector.utils.formatEther(value));
-
-export const formatUniv1 = value =>  {
  
-	return Number(value.toString() / 10**6).toFixed(4)
-}
 export const getAddress = addr => addr ; //snxJSConnector.ethersUtils.getAddress(addr);
