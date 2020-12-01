@@ -41,7 +41,7 @@ const SetAllowance = ({ t }) => {
 					{
 						hash: transactionHash,
 						status: 'pending',
-						info: `Setting Uni-V1 LP token allowance`,
+						info: `Setting Uni-V2  LP token allowance`,
 						hasNotification: true,
 					},
 					dispatch
