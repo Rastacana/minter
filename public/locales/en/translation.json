@@ -426,10 +426,10 @@
 		},
 		"actions": {
 			"unipoolSETH": {
-				"title": "Swap V2 sETH"
+				"title": "Swap V2 TRX/sETH"
 			},
 			"unipoolSTRX": {
-				"title": "Swap V2 sTRX"
+				"title": "Swap V2 TRX/sTRX"
 			},
 			"unipoolUSDTRX": {
 				"title": "SWAP V2 TRX/USDT"
