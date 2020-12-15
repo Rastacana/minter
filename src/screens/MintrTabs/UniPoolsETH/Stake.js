@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next';
 import snxJSConnector from '../../../helpers/snxJSConnector';
 import { Store } from '../../../store';
 
-import { bigNumberFormatter, formatCurrency, formatUniv1 } from '../../../helpers/formatters';
+import { bigNumberFormatter, formatCurrency, formatUniv1, formatMicroUni } from '../../../helpers/formatters';
 import TransactionPriceIndicator from '../../../components/TransactionPriceIndicator';
 import { updateGasLimit } from '../../../ducks/network';
 
@@ -17,6 +17,7 @@ import { ButtonTertiary, ButtonPrimary } from '../../../components/Button';
 import UnipoolActions from '../../UnipoolActionsETH';
 
 import UnstakeOldContract from './OldContract';
+
 
 const TRANSACTION_DETAILS = {
 	stake: {
@@ -47,7 +48,11 @@ const Stake = ({ t, onDestroy, goBack }) => {
 	const [currentScenario, setCurrentScenario] = useState({});
 	const [withdrawAmount, setWithdrawAmount] = useState('');
 	const [oldBalance, setOldBalance] = useState(0);
+	const [isMicro, setisMicro] = useState(false);
+	const [isMicroUniv1Held, setisMicroUniv1Held] = useState(false);
+	const [isMicroUniv1Staked, setisMicroUniv1Staked] = useState(false);
 
+ 
 	const {
 		state: {
 			wallet: { currentWallet },
@@ -59,18 +64,33 @@ const Stake = ({ t, onDestroy, goBack }) => {
 		if (!snxJSConnector.initialized) return;
 		try {
 			const { uniswapsethContract, unipoolsethContract } = snxJSConnector;
-			const [univ1Held, univ1Staked, rewards] = await Promise.all([
+			let [univ1Held, univ1Staked, rewards] = await Promise.all([
 				uniswapsethContract.balanceOf(currentWallet).call({ _isConstant: true }),
 				unipoolsethContract.balanceOf(currentWallet).call(),
 				unipoolsethContract.earned(currentWallet).call(),
 			]);
+			const threshold = 0.00001
+			let parsedUniv1Held = Number(formatUniv1(univ1Held, 18))
+			let parsedUniv1Staked = Number(formatUniv1(univ1Staked, 18))
+
+			console.log(parsedUniv1Held < threshold, parsedUniv1Held)
+
+			if (parsedUniv1Held > 0 && (parsedUniv1Held < threshold)) {
+			   console.log("micro balance held")
+			   setisMicroUniv1Held(true);
+		    } 
+		    if (parsedUniv1Staked > 0 && (parsedUniv1Staked < threshold)) {
+			   console.log("micro balance staked")
+			   setisMicroUniv1Staked(true);
+			} 
 			setBalances({
-				univ1Held: formatUniv1(univ1Held),
+				univ1Held: univ1Held,
 				univ1HeldBN: univ1Held,
-				univ1Staked: formatUniv1(univ1Staked),
+				univ1Staked: univ1Staked,
 				univ1StakedBN: univ1Staked,
 				rewards: bigNumberFormatter(rewards),
 			});
+
 			//updateGasLimit(TRANSACTION_DETAILS.stake.gasLimit, dispatch);
 		} catch (e) {
 			console.log(e);
@@ -98,6 +118,9 @@ const Stake = ({ t, onDestroy, goBack }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentWallet]);
 
+	const labelHeld = isMicroUniv1Held ? "mSWAP" : "SWAP"
+	const labelStaked = isMicroUniv1Staked ? "mSWAP" : "SWAP"
+
 	return (
 		<Container>
 			<UnipoolActions {...currentScenario} onDestroy={() => setCurrentScenario({})} />
@@ -117,11 +140,11 @@ const Stake = ({ t, onDestroy, goBack }) => {
 			<BoxRow>
 				<DataBox
 					heading={t('unipool.unlocked.data.balance')}
-					body={`${balances ? (balances.univ1Held) : 0} SWAP`}
+					body={`${isMicroUniv1Held ? (balances ? formatMicroUni(balances.univ1Held) : 0) :  (balances ? formatUniv1(balances.univ1Held, 6) : 0) } ` + labelHeld}
 				/>
 				<DataBox
 					heading={t('unipool.unlocked.data.staked')}
-					body={`${balances ? formatCurrency(balances.univ1Staked) : 0} SWAP`}
+					body={`${ isMicroUniv1Staked ? (balances ? formatMicroUni(balances.univ1Staked) : 0) :  (balances ? formatUniv1(balances.univ1Staked, 6) : 0) } ` + labelStaked}
 				/>
 				<DataBox
 					heading={t('unipool.unlocked.data.rewardsAvailable')}
@@ -136,7 +159,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 							setCurrentScenario({
 								action: 'stake',
 								label: t('unipool.unlocked.actions.staking'),
-								amount: `${balances && formatUniv1(balances.univ1Held)} SWAP`,
+								amount: `${isMicroUniv1Held ? (balances ? formatMicroUni(balances.univ1Held) : 0) :  (balances ? formatUniv1(balances.univ1Held, 6) : 0) } ` + labelStaked,
 								param: balances && balances.univ1HeldBN,
 								...TRANSACTION_DETAILS['stake'],
 							})
@@ -145,7 +168,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 						{t('unipool.buttons.stake')}
 					</ButtonAction>
 					<ButtonAction
-						disabled={!balances || !balances.rewards}
+						disabled={!balances || !(balances.univ1Held > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'claim',
@@ -160,12 +183,12 @@ const Stake = ({ t, onDestroy, goBack }) => {
 				</ButtonRow>
 				<ButtonRow>
 					<ButtonAction
-						disabled={!balances || !balances.univ1Staked}
+						disabled={!balances || !(balances.univ1Staked > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'unstake',
 								label: t('unipool.unlocked.actions.unstaking'),
-								amount: `${balances && formatUniv1(balances.univ1Staked)} SWAP`,
+								amount: `${ isMicroUniv1Staked ? (balances ? formatMicroUni(balances.univ1Staked) : 0) :  (balances ? formatUniv1(balances.univ1Staked, 6) : 0) } ` + labelStaked,
 								param: balances && balances.univ1StakedBN,
 								...TRANSACTION_DETAILS['unstake'],
 							})
@@ -174,12 +197,12 @@ const Stake = ({ t, onDestroy, goBack }) => {
 						{t('unipool.buttons.unstake')}
 					</ButtonAction>
 					<ButtonAction
-						disabled={!balances || (!balances.univ1Staked && !balances.rewards)}
+						disabled={!balances || !(balances.univ1Staked > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'exit',
 								label: t('unipool.unlocked.actions.exiting'),
-								amount: `${balances && formatUniv1(balances.univ1Staked)} SWAP & ${balances &&
+								amount: `${ isMicroUniv1Staked ? (balances ? formatMicroUni(balances.univ1Staked) : 0) :  (balances ? formatUniv1(balances.univ1Staked, 6) : 0) } ${labelStaked} & ${balances &&
 									formatCurrency(balances.rewards)} OKS`,
 								...TRANSACTION_DETAILS['exit'],
 							})

@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next';
 import snxJSConnector from '../../../helpers/snxJSConnector';
 import { Store } from '../../../store';
 
-import { bigNumberFormatter, formatCurrency, formatUniv1 } from '../../../helpers/formatters';
+import { bigNumberFormatter, formatCurrency, formatUniv1, formatMicroUni } from '../../../helpers/formatters';
 import TransactionPriceIndicator from '../../../components/TransactionPriceIndicator';
 import { updateGasLimit } from '../../../ducks/network';
 
@@ -45,6 +45,9 @@ const Stake = ({ t, goBack }) => {
 	const [currentScenario, setCurrentScenario] = useState({});
 	const [withdrawAmount, setWithdrawAmount] = useState('');
 	const [oldBalance, setOldBalance] = useState(0);
+	const [isMicro, setisMicro] = useState(false);
+	const [isMicroUniv1Held, setisMicroUniv1Held] = useState(false);
+	const [isMicroUniv1Staked, setisMicroUniv1Staked] = useState(false);
 
 	const {
 		state: {
@@ -60,16 +63,32 @@ const Stake = ({ t, goBack }) => {
 
 			const { uniswaptrxusdtContract, unipooltrxusdtContract } = snxJSConnector;
 			 
-			const [univ1Held, univ1Staked, rewards] = await Promise.all([
+			let [univ1Held, univ1Staked, rewards] = await Promise.all([
 				uniswaptrxusdtContract.balanceOf(currentWallet).call({ _isConstant: true }),
 				unipooltrxusdtContract.balanceOf(currentWallet).call(),
 				unipooltrxusdtContract.earned(currentWallet).call(),
 			]);
 
+			const threshold = 0.00001
+			let parsedUniv1Held = Number(formatUniv1(univ1Held, 18))
+			let parsedUniv1Staked = Number(formatUniv1(univ1Staked, 18))
+
+			console.log(parsedUniv1Held < threshold, parsedUniv1Held)
+
+			if (parsedUniv1Held > 0 && (parsedUniv1Held < threshold)) {
+			   //console.log("micro balance held")
+			   setisMicroUniv1Held(true);
+		    } 
+
+		    if (parsedUniv1Staked > 0 && (parsedUniv1Staked < threshold)) {
+			   //console.log("micro balance staked")
+			   setisMicroUniv1Staked(true);
+			} 
+
 			setBalances({
-				univ1Held: formatUniv1(univ1Held),
+				univ1Held: univ1Held,
 				univ1HeldBN: univ1Held,
-				univ1Staked: formatUniv1(univ1Staked),
+				univ1Staked: univ1Staked,
 				univ1StakedBN: univ1Staked,
 				rewards: bigNumberFormatter(rewards),
 			});
@@ -100,6 +119,14 @@ const Stake = ({ t, goBack }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentWallet]);
 
+	if (balances) {
+		console.log(balances.univ1Held > 0)
+
+	}
+
+	const labelHeld = isMicroUniv1Held ? "mSWAP" : "SWAP"
+	const labelStaked = isMicroUniv1Staked ? "mSWAP" : "SWAP"
+
 	return (
 		<Container>
 			<UnipoolActions {...currentScenario} onDestroy={() => setCurrentScenario({})} />
@@ -119,11 +146,11 @@ const Stake = ({ t, goBack }) => {
 			<BoxRow>
 				<DataBox
 					heading={t('unipool.unlocked.data.balance')}
-					body={`${balances ? formatCurrency(balances.univ1Held) : 0} SWAP`}
+					body={`${isMicroUniv1Held ? (balances ? formatMicroUni(balances.univ1Held) : 0) :  (balances ? formatUniv1(balances.univ1Held, 6) : 0) } ` + labelHeld}
 				/>
 				<DataBox
 					heading={t('unipool.unlocked.data.staked')}
-					body={`${balances ? formatCurrency(balances.univ1Staked) : 0} SWAP`}
+					body={`${ isMicroUniv1Staked ? (balances ? formatMicroUni(balances.univ1Staked) : 0) :  (balances ? formatUniv1(balances.univ1Staked, 6) : 0) } ` + labelStaked}
 				/>
 				<DataBox
 					heading={t('unipool.unlocked.data.rewardsAvailable')}
@@ -133,13 +160,13 @@ const Stake = ({ t, goBack }) => {
 			<ButtonBlock>
 				<ButtonRow>
 					<ButtonAction
-						disabled={!balances || !balances.univ1Held}
+						disabled={!balances || !(balances.univ1Held > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'stake',
 								label: t('unipool.unlocked.actions.staking'),
-								amount: `${balances && formatCurrency(balances.univ1Held)} SWAP`,
-								param: balances && balances.univ1HeldBN,
+								amount: `${isMicroUniv1Held ? (balances ? formatMicroUni(balances.univ1Held) : 0) :  (balances ? formatUniv1(balances.univ1Held, 6) : 0) } ` + labelStaked,
+								param: balances && isMicroUniv1Held ? balances.univ1Held : balances.univ1HeldBN ,
 								...TRANSACTION_DETAILS['stake'],
 							})
 						}
@@ -162,12 +189,12 @@ const Stake = ({ t, goBack }) => {
 				</ButtonRow>
 				<ButtonRow>
 					<ButtonAction
-						disabled={!balances || !balances.univ1Staked}
+						disabled={!balances || !(balances.univ1Staked > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'unstake',
 								label: t('unipool.unlocked.actions.unstaking'),
-								amount: `${balances && formatCurrency(balances.univ1Staked)} SWAP`,
+								amount: `${ isMicroUniv1Staked ? (balances ? formatMicroUni(balances.univ1Staked) : 0) :  (balances ? formatUniv1(balances.univ1Staked, 6) : 0) } ` + labelStaked,
 								param: balances && balances.univ1StakedBN,
 								...TRANSACTION_DETAILS['unstake'],
 							})
@@ -176,12 +203,12 @@ const Stake = ({ t, goBack }) => {
 						{t('unipool.buttons.unstake')}
 					</ButtonAction>
 					<ButtonAction
-						disabled={!balances || (!balances.univ1Staked && !balances.rewards)}
+						disabled={!balances || !(balances.univ1Staked > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'exit',
 								label: t('unipool.unlocked.actions.exiting'),
-								amount: `${balances && formatCurrency(balances.univ1Staked)} SWAP & ${balances &&
+								amount: `${ isMicroUniv1Staked ? (balances ? formatMicroUni(balances.univ1Staked) : 0) :  (balances ? formatUniv1(balances.univ1Staked, 6) : 0) } ${labelStaked} & ${balances &&
 									formatCurrency(balances.rewards)} OKS`,
 								...TRANSACTION_DETAILS['exit'],
 							})
