@@ -43,7 +43,7 @@ const TRANSACTION_DETAILS = {
 };
 
 const Stake = ({ t, onDestroy, goBack }) => {
-	const { unipoolsethContract, oldunipoolsethContract } = snxJSConnector;
+	
 	const [balances, setBalances] = useState(null);
 	const [currentScenario, setCurrentScenario] = useState({});
 	const [withdrawAmount, setWithdrawAmount] = useState('');

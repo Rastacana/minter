@@ -40,7 +40,7 @@ const TRANSACTION_DETAILS = {
 };
 
 const Stake = ({ t, goBack }) => {
-	const { unipoolstrxContract, oldunipoolstrxContract } = snxJSConnector;
+	
 	const [balances, setBalances] = useState(null);
 	const [currentScenario, setCurrentScenario] = useState({});
 	const [withdrawAmount, setWithdrawAmount] = useState('');
@@ -65,7 +65,7 @@ const Stake = ({ t, goBack }) => {
 				unipoolstrxContract.balanceOf(currentWallet).call(),
 				unipoolstrxContract.earned(currentWallet).call(),
 			]);
-			
+
 			const threshold = 0.00001
 			let parsedUniv1Held = Number(formatUniv1(univ1Held, 18))
 			let parsedUniv1Staked = Number(formatUniv1(univ1Staked, 18))
