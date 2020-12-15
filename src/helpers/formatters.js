@@ -9,11 +9,8 @@ export const formatCurrency = (value, decimals = 3) => {
 };
 
 export const formatUniv1 = (value, decimals = 6) => {
-	
 	if (!value) return 0;
 	if (!Number(value)) return 0;
-	
-	console.log("got value " + value, "showing " + Number(value / 10**18 ).toFixed(decimals) )
 	return Number(value / 10**18 ).toFixed(decimals) 
 };
 
