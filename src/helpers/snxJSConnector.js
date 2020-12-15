@@ -186,7 +186,7 @@ export const connectToWallet = async ({ wallet, derivationPath }) => {
 	}
 
 	let _contracts = [];
-	console.log(contracts.unipoolSUSDUSDT.address,contracts.unipoolTRXUSDT.address )
+	
 	let uniswapsusdusdtContract =  tronWeb.contract(contracts.uniswapSUSDUSDT.abi, contracts.uniswapSUSDUSDT.address);
 	let unipoolsusdusdtContract = await tronWeb.contract().at(contracts.unipoolSUSDUSDT.address);
 
