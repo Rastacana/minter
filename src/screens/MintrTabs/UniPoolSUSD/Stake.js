@@ -14,7 +14,7 @@ import { PageTitle, PLarge } from '../../../components/Typography';
 import DataBox from '../../../components/DataBox';
 import { ButtonTertiary, ButtonPrimary } from '../../../components/Button';
 
-import UnipoolActions from '../../UnipoolActionsUSDT';
+import UnipoolActions from '../../UnipoolActionsSUSD';
 
 const TRANSACTION_DETAILS = {
 	stake: {
@@ -40,7 +40,6 @@ const TRANSACTION_DETAILS = {
 };
 
 const Stake = ({ t, goBack }) => {
-	const { unipooltrxusdtContract } = snxJSConnector;
 	const [balances, setBalances] = useState(null);
 	const [currentScenario, setCurrentScenario] = useState({});
 	const [withdrawAmount, setWithdrawAmount] = useState('');
@@ -61,12 +60,12 @@ const Stake = ({ t, goBack }) => {
 		if (!snxJSConnector.initialized) return;
 		try {
 
-			const { uniswaptrxusdtContract, unipooltrxusdtContract } = snxJSConnector;
+			const { uniswapsusdusdtContract, unipoolsusdusdtContract } = snxJSConnector;
 			 
 			let [univ1Held, univ1Staked, rewards] = await Promise.all([
-				uniswaptrxusdtContract.balanceOf(currentWallet).call({ _isConstant: true }),
-				unipooltrxusdtContract.balanceOf(currentWallet).call(),
-				unipooltrxusdtContract.earned(currentWallet).call(),
+				uniswapsusdusdtContract.balanceOf(currentWallet).call({ _isConstant: true }),
+				unipoolsusdusdtContract.balanceOf(currentWallet).call(),
+				unipoolsusdusdtContract.earned(currentWallet).call(),
 			]);
 
 			const threshold = 0.00001
@@ -76,12 +75,11 @@ const Stake = ({ t, goBack }) => {
 			//console.log(parsedUniv1Held < threshold, parsedUniv1Held)
 
 			if (parsedUniv1Held > 0 && (parsedUniv1Held < threshold)) {
-			   //console.log("micro balance held")
+			   console.log("micro balance held")
 			   setisMicroUniv1Held(true);
 		    } 
-
 		    if (parsedUniv1Staked > 0 && (parsedUniv1Staked < threshold)) {
-			   //console.log("micro balance staked")
+			   console.log("micro balance staked")
 			   setisMicroUniv1Staked(true);
 			} 
 
@@ -107,7 +105,7 @@ const Stake = ({ t, goBack }) => {
 
 	useEffect(() => {
 		if (!currentWallet) return;
-		const { uniswaptrxusdtContract, unipooltrxusdtContract } = snxJSConnector;
+		//const {uniswapsusdusdtContract, unipoolsusdusdtContract  } = snxJSConnector;
 		(async () => {
 			/*const res = await oldunipoolstrxContract.balanceOf(currentWallet).call();
 			if (res) {

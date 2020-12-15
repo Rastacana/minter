@@ -433,7 +433,10 @@
 			},
 			"unipoolUSDTRX": {
 				"title": "SWAP V2 TRX/USDT"
-			}
+			},
+			"unipoolSUSDUSDT": {
+				"title": "SWAP V2 SUSD/USDT"
+			}			
 		},
 		"shared": {
 			"unlocked": {

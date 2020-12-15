@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import UniPoolsTRX from '../UniPoolsTRX';
 import UniPoolsETH from '../UniPoolsETH';
 import UniPoolTRXUSDT from '../UniPoolUSDT';
+import UniPoolSUSD from '../UniPoolSUSD';
 
 import { H1, PageTitle } from '../../../components/Typography';
 import PageContainer from '../../../components/PageContainer';
@@ -24,6 +25,10 @@ const ROW_2 = [
 		title: 'lpRewards.actions.unipoolSTRX.title',
 		name: 'swapTRXUSDT',
 	},
+	{
+		title: 'lpRewards.actions.unipoolSUSDUSDT.title',
+		name: 'swapSUSDUSDT',
+	},	
 ];
 const LPRewards = () => {
 	const { t } = useTranslation();
@@ -38,6 +43,8 @@ const LPRewards = () => {
 				return <UniPoolsETH goBack={goBack} />;
 			case 'swapTRXUSDT':
 				return <UniPoolTRXUSDT goBack={goBack} />;
+			case 'swapSUSDUSDT':
+					return <UniPoolSUSD goBack={goBack} />;				
 
 		}
 	};
@@ -74,7 +81,9 @@ const LPRewards = () => {
 						{ROW_2.map(({ title, name }) => {
 							let _name, _icon;
 							if (name === 'swapTRXUSDT') {
-								_name = 'unipoolUSDTRX';;
+								_name = 'unipoolUSDTRX';
+							} else 	if (name === 'swapSUSDUSDT') {
+								_name = 'unipoolSUSDUSDT';
 							}  
 							return (
 								<Button onClick={() => setCurrentPool(name)} key={Math.random()}>

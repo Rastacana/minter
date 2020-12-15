@@ -73,7 +73,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 			let parsedUniv1Held = Number(formatUniv1(univ1Held, 18))
 			let parsedUniv1Staked = Number(formatUniv1(univ1Staked, 18))
 
-			console.log(parsedUniv1Held < threshold, parsedUniv1Held)
+			//console.log(parsedUniv1Held < threshold, parsedUniv1Held)
 
 			if (parsedUniv1Held > 0 && (parsedUniv1Held < threshold)) {
 			   console.log("micro balance held")

@@ -59,7 +59,9 @@ const Stake = ({ t, goBack }) => {
 	const fetchData = useCallback(async () => {
 		if (!snxJSConnector.initialized) return;
 		try {
+
 			const { uniswapstrxContract, unipoolstrxContract } = snxJSConnector;
+
 			let [univ1Held, univ1Staked, rewards] = await Promise.all([
 				uniswapstrxContract.balanceOf(currentWallet).call({ _isConstant: true }),
 				unipoolstrxContract.balanceOf(currentWallet).call(),
@@ -70,7 +72,7 @@ const Stake = ({ t, goBack }) => {
 			let parsedUniv1Held = Number(formatUniv1(univ1Held, 18))
 			let parsedUniv1Staked = Number(formatUniv1(univ1Staked, 18))
 
-			console.log(parsedUniv1Held < threshold, parsedUniv1Held)
+			//console.log(parsedUniv1Held < threshold, parsedUniv1Held)
 
 			if ((parsedUniv1Held < threshold) && parsedUniv1Held > 0) {
 				console.log("micro balance held")
