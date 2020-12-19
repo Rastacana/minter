@@ -168,7 +168,7 @@ const Stake = ({ t, goBack }) => {
 						{t('unipoolSTRX.buttons.stake')}
 					</ButtonAction>
 					<ButtonAction
-						disabled={!balances || !balances.rewards}
+						disabled={!balances || !(balances.rewards > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'claim',

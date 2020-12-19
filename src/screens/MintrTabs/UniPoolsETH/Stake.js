@@ -168,7 +168,7 @@ const Stake = ({ t, onDestroy, goBack }) => {
 						{t('unipool.buttons.stake')}
 					</ButtonAction>
 					<ButtonAction
-						disabled={!balances || !(balances.univ1Held > 0)}
+						disabled={!balances || !(balances.rewards > 0)}
 						onClick={() =>
 							setCurrentScenario({
 								action: 'claim',
