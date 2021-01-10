@@ -69,7 +69,7 @@ const Swap = ({ t, onDestroy, goBack }) => {
 			]);
  
 			const ratio = (trxBalance*10**(18-6)) / strxBalance
-			const discountRate = 1 / (trxBalance*10**(18-6) / strxBalance)
+			const discountRate = (1 - ratio) * 100;
 			setBalances({
 				trxWalletBalance: window.tronWeb.fromSun(window.tronWeb.BigNumber(trxWalletBalance).toString()),
 				ratio: ratio,
@@ -108,7 +108,7 @@ const Swap = ({ t, onDestroy, goBack }) => {
 				/>
 				<DataBox
 					heading={t('ArbRewards.general.discountRate')}
-					body={`${balances ? formatCurrency(balances.discountRate)  : 0} X`}
+					body={`${balances ? formatCurrency(balances.discountRate)  : 0} %`}
 				/>
 				<DataBox
 					heading={t('unipool.unlocked.data.rewardsAvailable')}
