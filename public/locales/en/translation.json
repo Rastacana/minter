@@ -86,7 +86,8 @@
 			"depot": "Depot",
 			"transactionsHistory": "Transactions",
 			"escrow": "Escrow",
-			"lpRewards": "LP rewards"
+			"lpRewards": "LP rewards",
+			"arbRewards": "Arb rewards"
 		}
 	},
 
@@ -417,6 +418,26 @@
 			"unstake": "Unstake Swap tokens",
 			"exit": "exit: claim & unstake",
 			"migrate": "migrate to new rewards contract your balance of"
+		}
+	},
+	"ArbRewards":{
+		"sTRX" : {
+			"title": "Earn OKS by arbitraging the sTRX/TRX pool",
+			"subtitle": "If the sTRX/TRX rate on Oikos Swap falls below 99/100 you can profit from it by swapping TRX for OKS at a discount rate."
+		},
+		"intro":{
+			"title": "Please choose an arbitraging pool"
+		},
+		"general": {
+			"trxPrice": "1 sTRX equals",
+			"discountRate": "Discount rate",
+			"availableRewards" :"Rewards available"
+		},
+		"actions":{
+			"swap": "Swap"
+		},
+		"labels":{
+			"swap": "Swap TRX for sTRX"
 		}
 	},
 	"lpRewards": {

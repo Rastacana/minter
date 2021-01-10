@@ -2,6 +2,9 @@ const addresses = require('@oikos/swap/addresses.json');
 //OLD contract 4115909315aadea0064b67634d2c9d54805d0b409c
 //Last contract 415ea3ad9cfa4b303689cdd78e63cd2be9266d3173
 export default {
+	arbrewarderSTRX: {
+		address: '410a57d70b6b885825acb38dcd302306ae695bf337'
+	},
 	unipoolTRXUSDT: {
 		//oldAddress: '41e8f14e5566f93c0ea5a137b89692770fc1d15338',
 		address: '41e8f14e5566f93c0ea5a137b89692770fc1d15338',

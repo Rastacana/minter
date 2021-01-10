@@ -32,7 +32,7 @@ let snxJSConnector = {
 
 		this.uniswapsusdusdtContract = contractSettings._contracts[6];
 		this.unipoolsusdusdtContract = contractSettings._contracts[7];
-
+		this.arbrewarderstrxContract = contractSettings._contracts[8];
 		//this.oldUnipoolsethContract = contractSettings._contracts[5];
 		//console.log(contractSettings._contracts[7])
 	},
@@ -200,7 +200,7 @@ export const connectToWallet = async ({ wallet, derivationPath }) => {
 	let uniswapsethContract = await  tronWeb.contract(contracts.uniswapSETH.abi, contracts.uniswapSETH.address);
 	let unipoolsethContract = await tronWeb.contract().at(contracts.unipoolseth.address);
 	//let oldUnipoolsethContract = await tronWeb.contract().at(unipoolseth.oldAddress);
-
+	let arbrewarderstrxContract = await tronWeb.contract().at(contracts.arbrewarderSTRX.address);
 	_contracts.push(uniswapstrxContract);
 	_contracts.push(unipoolstrxContract);
 
@@ -214,6 +214,7 @@ export const connectToWallet = async ({ wallet, derivationPath }) => {
 
 	_contracts.push(uniswapsusdusdtContract);
 	_contracts.push(unipoolsusdusdtContract);
+	_contracts.push(arbrewarderstrxContract);
 
 	//_contracts.push(oldUnipoolsethContract);
 
