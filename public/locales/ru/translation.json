@@ -1,4 +1,24 @@
 {
+	"ArbRewards":{
+		"sTRX" : {
+			"title": "Заработайте OKS путем арбитража пула sTRX / TRX",
+			"subtitle": "Если курс sTRX / TRX на Oikos Swap упадет ниже 99/100, вы можете получить от него прибыль, обменяв TRX на OKS со скидкой".
+		},
+		"intro":{
+			"title": "Выберите пул арбитража"
+		},
+		"general": {
+			"trxPrice": "1 sTRX等于",
+			"discountRate": "折扣率",
+			"availableRewards" :"Выберите пул арбитража"
+		},
+		"actions":{
+			"swap": "Обмен"
+		},
+		"labels":{
+			"swap": "Заменить TRX на sTRX"
+		}
+	},
 	"onboarding": {
 		"slides": {
 			"welcome": {
