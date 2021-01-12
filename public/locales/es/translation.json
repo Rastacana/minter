@@ -1,4 +1,24 @@
 {
+	"ArbRewards":{
+		"sTRX" : {
+			"title": "Obtenga OKS arbitrando el pool sTRX / TRX",
+			"subtitle": "Si la tasa sTRX / TRX en Oikos Swap cae por debajo de 99/100, puede beneficiarse cambiando TRX por OKS a una tasa de descuento."
+		},
+		"intro":{
+			"title": "Elija un pool de arbitraje"
+		},
+		"general": {
+			"trxPrice": "1 sTRX igual a",
+			"discountRate": "Tasa de descuento",
+			"availableRewards" :"Recompensas disponibles"
+		},
+		"actions":{
+			"swap": "Intercambiar"
+		},
+		"labels":{
+			"swap": "Intercambiar TRX por sTRX"
+		}
+	},
 	"onboarding": {
 		"slides": {
 			"welcome": {
