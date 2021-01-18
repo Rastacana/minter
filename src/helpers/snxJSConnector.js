@@ -187,34 +187,6 @@ export const connectToWallet = async ({ wallet, derivationPath }) => {
 
 	let _contracts = [];
 	
-	let uniswapsusdusdtContract =  tronWeb.contract(contracts.uniswapSUSDUSDT.abi, contracts.uniswapSUSDUSDT.address);
-	let unipoolsusdusdtContract = await tronWeb.contract().at(contracts.unipoolSUSDUSDT.address);
-
-	let uniswaptrxusdtContract =  tronWeb.contract(contracts.uniswapTRXUSDT.abi, contracts.uniswapTRXUSDT.address);
-	let unipooltrxusdtContract = await tronWeb.contract().at(contracts.unipoolTRXUSDT.address);
-	
-	let uniswapstrxContract = await  tronWeb.contract(contracts.uniswapSTRX.abi, contracts.uniswapSTRX.address);
-	let unipoolstrxContract = await tronWeb.contract().at(contracts.unipoolstrx.address);
-	//let oldUnipoolstrxContract = await tronWeb.contract().at(unipoolstrx.oldAddress);
-
-	let uniswapsethContract = await  tronWeb.contract(contracts.uniswapSETH.abi, contracts.uniswapSETH.address);
-	let unipoolsethContract = await tronWeb.contract().at(contracts.unipoolseth.address);
-	//let oldUnipoolsethContract = await tronWeb.contract().at(unipoolseth.oldAddress);
-	let arbrewarderstrxContract = await tronWeb.contract().at(contracts.arbrewarderSTRX.address);
-	_contracts.push(uniswapstrxContract);
-	_contracts.push(unipoolstrxContract);
-
-	//_contracts.push(oldUnipoolstrxContract);
-	_contracts.push(uniswapsethContract);
-	_contracts.push(unipoolsethContract);
-
-	//console.log(uniswaptrxusdtContract)
-	_contracts.push(uniswaptrxusdtContract);
-	_contracts.push(unipooltrxusdtContract);
-
-	_contracts.push(uniswapsusdusdtContract);
-	_contracts.push(unipoolsusdusdtContract);
-	_contracts.push(arbrewarderstrxContract);
 
 	//_contracts.push(oldUnipoolsethContract);
 
